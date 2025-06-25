@@ -55,7 +55,7 @@ Type: `list(string)`
 
 Default: `[]`
 
-### <a name="input_authentication_failure_mode "></a> [authentication\_failure\_mode ](#input\_authentication\_failure\_mode )
+### <a name="input_authentication_failure_mode"></a> [authentication\_failure\_mode](#input\_authentication\_failure\_mode)
 
 Description: Authentication failure mode for the Azure service plan.
 
@@ -191,7 +191,7 @@ Description: List of user assigned identity IDs for the Azure service plan.
 
 Type: `list(string)`
 
-Default: `""`
+Default: `[]`
 
 ## Outputs
 
@@ -224,6 +224,10 @@ The minimal usage for the module is as follows:
 ```hcl
 module "template" {
     source = "../.."
+
+    name = "azure-search-service"
+    location = "North Europe"
+    resource_group_name = "example-rg"
 }
 ```
 ## Contributing
