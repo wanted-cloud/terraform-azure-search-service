@@ -1,0 +1,22 @@
+{
+  "name": "${name}",
+  "type": "${type}",
+  "credentials": ${jsonencode(credentials)},
+  "container": ${jsonencode(container)},
+  % if description != null:
+  "description": "${description}",
+  % endif
+  % if dataChangeDetectionPolicy != null:
+  "dataChangeDetectionPolicy": ${jsonencode(dataChangeDetectionPolicy)},
+  % endif
+  % if dataDeletionDetectionPolicy != null:
+  "dataDeletionDetectionPolicy": ${jsonencode(dataDeletionDetectionPolicy)},
+  % endif
+  % if encryptionKey != null:
+  "encryptionKey": ${jsonencode(encryptionKey)},
+  % endif
+  % if etag != null:
+  "@odata.etag": "${etag}",
+  % endif
+  "@odata.type": "#Microsoft.Azure.Search.DataSource"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "${name}",
+  "skills": ${jsonencode(skills)},
+  % if description != null:
+  "description": "${description}",
+  % endif
+  % if cognitiveServices != null:
+  "cognitiveServices": ${jsonencode(cognitiveServices)},
+  % endif
+  % if encryptionKey != null:
+  "encryptionKey": ${jsonencode(encryptionKey)},
+  % endif
+  % if knowledgeStore != null:
+  "knowledgeStore": ${jsonencode(knowledgeStore)},
+  % endif
+  % if semanticSearch != null:
+  "semanticSearch": ${jsonencode(semanticSearch)},
+  % endif
+  % if etag != null:
+  "@odata.etag": "${etag}",
+  % endif
+  "@odata.type": "#Microsoft.Azure.Search.Skillset"
+}

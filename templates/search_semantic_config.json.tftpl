@@ -1,0 +1,14 @@
+{
+  "name": "${name}",
+  "prioritizedFields": ${jsonencode(prioritizedFields)},
+  % if defaultAnswer != null:
+  "defaultAnswer": "${defaultAnswer}",
+  % endif
+  % if defaultAnswerField != null:
+  "defaultAnswerField": "${defaultAnswerField}",
+  % endif
+  % if defaultAnswerFieldMapping != null:
+  "defaultAnswerFieldMapping": ${jsonencode(defaultAnswerFieldMapping)},
+  % endif
+  "@odata.type": "#Microsoft.Azure.Search.SemanticConfiguration"
+}
