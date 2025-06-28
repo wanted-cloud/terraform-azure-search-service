@@ -112,18 +112,18 @@ variable "indexes" {
   type = list(object({
     name = string
     fields = list(object({
-      name = string
-      type = string
-      key = optional(bool)
-      searchable = optional(bool)
-      filterable = optional(bool)
-      sortable = optional(bool)
-      facetable = optional(bool)
-      retrievable = optional(bool)
-      analyzer = optional(string)
+      name            = string
+      type            = string
+      key             = optional(bool)
+      searchable      = optional(bool)
+      filterable      = optional(bool)
+      sortable        = optional(bool)
+      facetable       = optional(bool)
+      retrievable     = optional(bool)
+      analyzer        = optional(string)
       search_analyzer = optional(string)
-      index_analyzer = optional(string)
-      synonym_maps = optional(list(string))
+      index_analyzer  = optional(string)
+      synonym_maps    = optional(list(string))
       fields = optional(list(object({
         name = string
         type = string
@@ -131,17 +131,17 @@ variable "indexes" {
       })))
     }))
     suggesters = optional(list(object({
-      name = string
+      name         = string
       sourceFields = list(string)
     })))
     scoringProfiles = optional(list(any))
-    analyzers = optional(list(any))
-    tokenizers = optional(list(any))
-    tokenFilters = optional(list(any))
-    charFilters = optional(list(any))
-    encryptionKey = optional(any)
-    corsOptions = optional(any)
-    semantic = optional(any)
+    analyzers       = optional(list(any))
+    tokenizers      = optional(list(any))
+    tokenFilters    = optional(list(any))
+    charFilters     = optional(list(any))
+    encryptionKey   = optional(any)
+    corsOptions     = optional(any)
+    semantic        = optional(any)
     // ...add more as needed from REST API schema...
   }))
   default = []
@@ -150,15 +150,15 @@ variable "indexes" {
 variable "data_sources" {
   description = "List of data sources to create for Azure Search. See Azure Search REST API docs for details."
   type = list(object({
-    name        = string
-    type        = string # e.g. 'azureblob', 'azuresql', 'cosmosdb', etc.
-    credentials = object({ connectionString = string })
-    container   = object({ name = string, query = optional(string) })
-    description = optional(string)
-    dataChangeDetectionPolicy = optional(any)
+    name                        = string
+    type                        = string # e.g. 'azureblob', 'azuresql', 'cosmosdb', etc.
+    credentials                 = object({ connectionString = string })
+    container                   = object({ name = string, query = optional(string) })
+    description                 = optional(string)
+    dataChangeDetectionPolicy   = optional(any)
     dataDeletionDetectionPolicy = optional(any)
-    encryptionKey = optional(any)
-    etag = optional(string)
+    encryptionKey               = optional(any)
+    etag                        = optional(string)
   }))
   default = []
 }
@@ -166,14 +166,14 @@ variable "data_sources" {
 variable "skillsets" {
   description = "List of skillsets to create for Azure Search. See Azure Search REST API docs for details."
   type = list(object({
-    name = string
-    skills = list(any)
-    description = optional(string)
+    name              = string
+    skills            = list(any)
+    description       = optional(string)
     cognitiveServices = optional(any)
-    encryptionKey = optional(any)
-    knowledgeStore = optional(any)
-    semanticSearch = optional(any)
-    etag = optional(string)
+    encryptionKey     = optional(any)
+    knowledgeStore    = optional(any)
+    semanticSearch    = optional(any)
+    etag              = optional(string)
   }))
   default = []
 }
@@ -181,21 +181,21 @@ variable "skillsets" {
 variable "indexers" {
   description = "List of indexers to create for Azure Search. See Azure Search REST API docs for details."
   type = list(object({
-    name = string
-    dataSourceName = string
+    name            = string
+    dataSourceName  = string
     targetIndexName = string
     schedule = optional(object({
-      interval = string
+      interval  = string
       startTime = optional(string)
     }))
-    description = optional(string)
-    parameters = optional(any)
-    fieldMappings = optional(list(any))
+    description         = optional(string)
+    parameters          = optional(any)
+    fieldMappings       = optional(list(any))
     outputFieldMappings = optional(list(any))
-    skillsetName = optional(string)
-    encryptionKey = optional(any)
-    disabled = optional(bool)
-    etag = optional(string)
+    skillsetName        = optional(string)
+    encryptionKey       = optional(any)
+    disabled            = optional(bool)
+    etag                = optional(string)
   }))
   default = []
 }
@@ -205,12 +205,12 @@ variable "semantic_configs" {
   type = list(object({
     name = string
     prioritizedFields = object({
-      titleField = object({ fieldName = string })
-      prioritizedContentFields = list(object({ fieldName = string }))
+      titleField                = object({ fieldName = string })
+      prioritizedContentFields  = list(object({ fieldName = string }))
       prioritizedKeywordsFields = list(object({ fieldName = string }))
     })
-    defaultAnswer = optional(string)
-    defaultAnswerField = optional(string)
+    defaultAnswer             = optional(string)
+    defaultAnswerField        = optional(string)
     defaultAnswerFieldMapping = optional(any)
   }))
   default = []
