@@ -126,3 +126,30 @@ variable "data_sources" {
   }))
   default = []
 }
+
+variable "skillsets" {
+  description = <<EOT
+A list of skillset objects for Azure Cognitive Search skillsets. Each object should conform to the API schema:
+- name (string, required): The name of the skillset.
+- skills (list(object), required): List of skill definitions (see API for structure).
+- description (string, optional): Description of the skillset.
+- cognitive_services (object, optional): Cognitive services account details.
+- encryption_key (object, optional): Encryption key definition.
+- index_projections (object, optional): Index projections definition.
+- knowledge_store (object, optional): Knowledge store definition.
+- etag (string, optional): ETag for concurrency control.
+- allow_skillset_debugging (bool, optional): Enable skillset debugging.
+EOT
+  type = list(object({
+    name                     = string
+    skills                   = list(any) # Use 'any' for flexibility, or define a detailed object if needed
+    description              = optional(string)
+    cognitive_services       = optional(any)
+    encryption_key           = optional(any)
+    index_projections        = optional(any)
+    knowledge_store          = optional(any)
+    etag                     = optional(string)
+    allow_skillset_debugging = optional(bool)
+  }))
+  default = []
+}

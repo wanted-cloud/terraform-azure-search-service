@@ -1,0 +1,11 @@
+{
+  "name": "${name}"%{ if description != null },
+  "description": "${description}"%{ endif },
+  "skills": ${jsonencode(skills)}%{ if cognitive_services != null },
+  "cognitiveServices": ${jsonencode(cognitive_services)}%{ endif }%{ if encryption_key != null },
+  "encryptionKey": ${jsonencode(encryption_key)}%{ endif }%{ if index_projections != null },
+  "indexProjections": ${jsonencode(index_projections)}%{ endif }%{ if knowledge_store != null },
+  "knowledgeStore": ${jsonencode(knowledge_store)}%{ endif }%{ if etag != null },
+  "etag": "${etag}"%{ endif }%{ if allow_skillset_debugging != null },
+  "allowSkillsetDebugging": ${jsonencode(allow_skillset_debugging)}%{ endif }
+}

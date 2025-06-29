@@ -197,6 +197,37 @@ Type: `string`
 
 Default: `"free"`
 
+### <a name="input_skillsets"></a> [skillsets](#input\_skillsets)
+
+Description: A list of skillset objects for Azure Cognitive Search skillsets. Each object should conform to the API schema:
+- name (string, required): The name of the skillset.
+- skills (list(object), required): List of skill definitions (see API for structure).
+- description (string, optional): Description of the skillset.
+- cognitive\_services (object, optional): Cognitive services account details.
+- encryption\_key (object, optional): Encryption key definition.
+- index\_projections (object, optional): Index projections definition.
+- knowledge\_store (object, optional): Knowledge store definition.
+- etag (string, optional): ETag for concurrency control.
+- allow\_skillset\_debugging (bool, optional): Enable skillset debugging.
+
+Type:
+
+```hcl
+list(object({
+    name                     = string
+    skills                   = list(any) # Use 'any' for flexibility, or define a detailed object if needed
+    description              = optional(string)
+    cognitive_services       = optional(any)
+    encryption_key           = optional(any)
+    index_projections        = optional(any)
+    knowledge_store          = optional(any)
+    etag                     = optional(string)
+    allow_skillset_debugging = optional(bool)
+  }))
+```
+
+Default: `[]`
+
 ### <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name)
 
 Description: Name of the SKU to use for the Azure service plan.
@@ -231,6 +262,7 @@ The following resources are used by this module:
 
 - [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
 - [restapi_object.search_datasource](https://registry.terraform.io/providers/mastercard/restapi/latest/docs/resources/object) (resource)
+- [restapi_object.search_skillset](https://registry.terraform.io/providers/mastercard/restapi/latest/docs/resources/object) (resource)
 - [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) (data source)
 
 ## Usage
