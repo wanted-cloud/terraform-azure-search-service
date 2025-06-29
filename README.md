@@ -25,9 +25,9 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- <a name="provider_azapi"></a> [azapi](#provider\_azapi)
-
 - <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>=4.20.0)
+
+- <a name="provider_restapi"></a> [restapi](#provider\_restapi)
 
 ## Required Inputs
 
@@ -75,21 +75,25 @@ Default: `false`
 
 ### <a name="input_data_sources"></a> [data\_sources](#input\_data\_sources)
 
-Description: List of data sources to create for Azure Search. See Azure Search REST API docs for details.
+Description: List of data sources to create in the Azure Search Service.
 
 Type:
 
 ```hcl
 list(object({
-    name                        = string
-    type                        = string # e.g. 'azureblob', 'azuresql', 'cosmosdb', etc.
-    credentials                 = object({ connectionString = string })
-    container                   = object({ name = string, query = optional(string) })
-    description                 = optional(string)
+    name        = string
+    description = optional(string)
+    type        = string
+    credentials = object({
+      connectionString = string
+    })
+    container = object({
+      name  = string
+      query = optional(string)
+    })
     dataChangeDetectionPolicy   = optional(any)
     dataDeletionDetectionPolicy = optional(any)
     encryptionKey               = optional(any)
-    etag                        = optional(string)
   }))
 ```
 
@@ -111,87 +115,13 @@ Type: `string`
 
 Default: `""`
 
-### <a name="input_indexers"></a> [indexers](#input\_indexers)
-
-Description: List of indexers to create for Azure Search. See Azure Search REST API docs for details.
-
-Type:
-
-```hcl
-list(object({
-    name            = string
-    dataSourceName  = string
-    targetIndexName = string
-    schedule = optional(object({
-      interval  = string
-      startTime = optional(string)
-    }))
-    description         = optional(string)
-    parameters          = optional(any)
-    fieldMappings       = optional(list(any))
-    outputFieldMappings = optional(list(any))
-    skillsetName        = optional(string)
-    encryptionKey       = optional(any)
-    disabled            = optional(bool)
-    etag                = optional(string)
-  }))
-```
-
-Default: `[]`
-
-### <a name="input_indexes"></a> [indexes](#input\_indexes)
-
-Description: List of search indexes to create. Each item should have a 'name', 'fields', and optional index properties. See Azure Search REST API docs for details.
-
-Type:
-
-```hcl
-list(object({
-    name = string
-    fields = list(object({
-      name            = string
-      type            = string
-      key             = optional(bool)
-      searchable      = optional(bool)
-      filterable      = optional(bool)
-      sortable        = optional(bool)
-      facetable       = optional(bool)
-      retrievable     = optional(bool)
-      analyzer        = optional(string)
-      search_analyzer = optional(string)
-      index_analyzer  = optional(string)
-      synonym_maps    = optional(list(string))
-      fields = optional(list(object({
-        name = string
-        type = string
-        // ...nested fields for complex types...
-      })))
-    }))
-    suggesters = optional(list(object({
-      name         = string
-      sourceFields = list(string)
-    })))
-    scoringProfiles = optional(list(any))
-    analyzers       = optional(list(any))
-    tokenizers      = optional(list(any))
-    tokenFilters    = optional(list(any))
-    charFilters     = optional(list(any))
-    encryptionKey   = optional(any)
-    corsOptions     = optional(any)
-    semantic        = optional(any)
-    // ...add more as needed from REST API schema...
-  }))
-```
-
-Default: `[]`
-
 ### <a name="input_local_authentication_enabled"></a> [local\_authentication\_enabled](#input\_local\_authentication\_enabled)
 
 Description: Enable local authentication for the Azure service plan.
 
 Type: `bool`
 
-Default: `false`
+Default: `true`
 
 ### <a name="input_location"></a> [location](#input\_location)
 
@@ -259,28 +189,6 @@ Type: `number`
 
 Default: `1`
 
-### <a name="input_semantic_configs"></a> [semantic\_configs](#input\_semantic\_configs)
-
-Description: List of semantic configurations to create for Azure Search. See Azure Search REST API docs for details.
-
-Type:
-
-```hcl
-list(object({
-    name = string
-    prioritizedFields = object({
-      titleField                = object({ fieldName = string })
-      prioritizedContentFields  = list(object({ fieldName = string }))
-      prioritizedKeywordsFields = list(object({ fieldName = string }))
-    })
-    defaultAnswer             = optional(string)
-    defaultAnswerField        = optional(string)
-    defaultAnswerFieldMapping = optional(any)
-  }))
-```
-
-Default: `[]`
-
 ### <a name="input_semantic_search_sku"></a> [semantic\_search\_sku](#input\_semantic\_search\_sku)
 
 Description: SKU for semantic search.
@@ -288,27 +196,6 @@ Description: SKU for semantic search.
 Type: `string`
 
 Default: `"free"`
-
-### <a name="input_skillsets"></a> [skillsets](#input\_skillsets)
-
-Description: List of skillsets to create for Azure Search. See Azure Search REST API docs for details.
-
-Type:
-
-```hcl
-list(object({
-    name              = string
-    skills            = list(any)
-    description       = optional(string)
-    cognitiveServices = optional(any)
-    encryptionKey     = optional(any)
-    knowledgeStore    = optional(any)
-    semanticSearch    = optional(any)
-    etag              = optional(string)
-  }))
-```
-
-Default: `[]`
 
 ### <a name="input_sku_name"></a> [sku\_name](#input\_sku\_name)
 
@@ -342,12 +229,8 @@ No outputs.
 
 The following resources are used by this module:
 
-- [azapi_resource.search_datasource](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) (resource)
-- [azapi_resource.search_index](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) (resource)
-- [azapi_resource.search_indexer](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) (resource)
-- [azapi_resource.search_semantic_config](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) (resource)
-- [azapi_resource.search_skillset](https://registry.terraform.io/providers/hashicorp/azapi/latest/docs/resources/resource) (resource)
 - [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
+- [restapi_object.search_datasource](https://registry.terraform.io/providers/mastercard/restapi/latest/docs/resources/object) (resource)
 - [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) (data source)
 
 ## Usage
@@ -368,12 +251,31 @@ module "example" {
 The minimal usage for the module is as follows:
 
 ```hcl
+data "azurerm_storage_account" "this" {
+  name                = "wntdsearchtest"
+  resource_group_name = "example-rg"
+}
+
 module "template" {
     source = "../.."
 
-    name = "azure-search-service"
-    location = "North Europe"
+    name                = "ass-wntd"
+    location             = "North Europe"
     resource_group_name = "example-rg"
+
+   /*data_sources = [
+    {
+      name        = "my-storage-account"
+      description = "My Storage Account data source."
+      type        = "azureblob"
+      credentials = {
+        connectionString = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s", data.azurerm_storage_account.this.name, data.azurerm_storage_account.this.primary_access_key)
+      }
+      container = {
+        name  = "container"
+      }
+    }
+  ]*/
 }
 ```
 ## Contributing

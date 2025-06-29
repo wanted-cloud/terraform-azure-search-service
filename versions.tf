@@ -18,7 +18,7 @@ provider "restapi" {
   debug                = true
 
   headers = {
-    "api-key" = azurerm_search_service.this.primary_key,
+    "api-key"      = azurerm_search_service.this.primary_key,
     "Content-Type" = "application/json"
   }
 }

@@ -9,11 +9,15 @@ resource "restapi_object" "search_datasource" {
 
   create_method = "POST"
 
-  destroy_data = ""
+  destroy_data   = ""
   destroy_method = "DELETE"
-  destroy_path = "/datasources('{id}')"
+  destroy_path   = "/datasources('{id}')"
 
-  read_data = ""
+  read_data   = ""
   read_method = "GET"
-  read_path = "/datasources('{id}')"
+  read_path   = "/datasources('{id}')"
+
+  update_data   = templatefile("${path.module}/templates/data_source.tftpl", each.value)
+  update_method = "PUT"
+  update_path   = "/datasources('{id}')"
 }
