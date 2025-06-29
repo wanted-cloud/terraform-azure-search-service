@@ -1,0 +1,13 @@
+{
+  "name": "${indexer.name}",
+  "dataSourceName": "${indexer.dataSourceName}",
+  %{ if indexer.description != null }"description": "${indexer.description}",%{ endif }
+  %{ if indexer.disabled != null }"disabled": ${jsonencode(indexer.disabled)},%{ endif }
+  %{ if indexer.schedule != null }"schedule": ${jsonencode(indexer.schedule)},%{ endif }
+  %{ if indexer.parameters != null }"parameters": ${jsonencode(indexer.parameters)},%{ endif }
+  %{ if indexer.encryptionKey != null }"encryptionKey": ${jsonencode(indexer.encryptionKey)},%{ endif }
+  %{ if indexer.fieldMappings != null }"fieldMappings": ${jsonencode(indexer.fieldMappings)},%{ endif }
+  %{ if indexer.outputFieldMappings != null }"outputFieldMappings": ${jsonencode(indexer.outputFieldMappings)},%{ endif }
+  %{ if indexer.skillsetName != null }"skillsetName": "${indexer.skillsetName}",%{ endif }
+  "targetIndexName": "${indexer.targetIndexName}"
+}

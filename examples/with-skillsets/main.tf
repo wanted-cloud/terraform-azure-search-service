@@ -11,7 +11,7 @@ module "template" {
         description = "Skillset to chunk documents and generate embeddings"
         skills = [
           {
-            "@odata.type"           = "Microsoft.Skills.Text.SplitSkill",
+            "@odata.type"           = "#Microsoft.Skills.Text.SplitSkill",
             name                    = "#1"
             description             = "Split skill to chunk documents"
             context                 = "/document"

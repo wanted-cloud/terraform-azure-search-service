@@ -153,3 +153,75 @@ EOT
   }))
   default = []
 }
+
+variable "indexes" {
+  description = <<EOT
+A list of index objects for Azure Cognitive Search indexes. Each object should conform to the API schema:
+- name (string, required): The name of the index.
+- fields (list(object), required): List of field definitions (see API for structure).
+- scoringProfiles (list(object), optional): Scoring profiles for the index.
+- defaultScoringProfile (string, optional): Default scoring profile name.
+- suggesters (list(object), optional): Suggesters for the index.
+- analyzers (list(object), optional): Analyzers for the index.
+- tokenizers (list(object), optional): Tokenizers for the index.
+- tokenFilters (list(object), optional): Token filters for the index.
+- charFilters (list(object), optional): Character filters for the index.
+- corsOptions (object, optional): CORS options for the index.
+- encryptionKey (object, optional): Encryption key for the index.
+- similarity (object, optional): Similarity algorithm for the index.
+- semantic (object, optional): Semantic settings for the index.
+- vectorSearch (object, optional): Vector search configuration for the index.
+- etag (string, optional): ETag for concurrency control.
+EOT
+  type = list(object({
+    name                  = string
+    fields                = list(any) # Use 'any' for flexibility, or define a detailed object if needed
+    scoringProfiles       = optional(list(any))
+    defaultScoringProfile = optional(string)
+    suggesters            = optional(list(any))
+    analyzers             = optional(list(any))
+    tokenizers            = optional(list(any))
+    tokenFilters          = optional(list(any))
+    charFilters           = optional(list(any))
+    corsOptions           = optional(any)
+    encryptionKey         = optional(any)
+    similarity            = optional(any)
+    semantic              = optional(any)
+    vectorSearch          = optional(any)
+    etag                  = optional(string)
+  }))
+  default = []
+}
+
+variable "indexers" {
+  description = <<EOT
+A list of indexer objects for Azure Cognitive Search indexers. Each object should conform to the API schema:
+- name (string, required): The name of the indexer.
+- dataSourceName (string, required): The name of the datasource from which this indexer reads data.
+- targetIndexName (string, required): The name of the index to which this indexer writes data.
+- description (string, optional): The description of the indexer.
+- disabled (bool, optional): Whether the indexer is disabled.
+- schedule (object, optional): The schedule for this indexer.
+- parameters (object, optional): Parameters for indexer execution.
+- encryptionKey (object, optional): Encryption key for the indexer.
+- fieldMappings (list(object), optional): Field mappings from data source to index.
+- outputFieldMappings (list(object), optional): Output field mappings after enrichment.
+- skillsetName (string, optional): The name of the skillset executing with this indexer.
+- etag (string, optional): ETag for concurrency control.
+EOT
+  type = list(object({
+    name                = string
+    dataSourceName      = string
+    targetIndexName     = string
+    description         = optional(string)
+    disabled            = optional(bool)
+    schedule            = optional(any)
+    parameters          = optional(any)
+    encryptionKey       = optional(any)
+    fieldMappings       = optional(list(any))
+    outputFieldMappings = optional(list(any))
+    skillsetName        = optional(string)
+    etag                = optional(string)
+  }))
+  default = []
+}

@@ -1,0 +1,16 @@
+{
+  "name": "${index.name}",
+  %{ if index.scoringProfiles != null }"scoringProfiles": ${jsonencode(index.scoringProfiles)},%{ endif }
+  %{ if index.defaultScoringProfile != null }"defaultScoringProfile": "${index.defaultScoringProfile}",%{ endif }
+  %{ if index.suggesters != null }"suggesters": ${jsonencode(index.suggesters)},%{ endif }
+  %{ if index.analyzers != null }"analyzers": ${jsonencode(index.analyzers)},%{ endif }
+  %{ if index.tokenizers != null }"tokenizers": ${jsonencode(index.tokenizers)},%{ endif }
+  %{ if index.tokenFilters != null }"tokenFilters": ${jsonencode(index.tokenFilters)},%{ endif }
+  %{ if index.charFilters != null }"charFilters": ${jsonencode(index.charFilters)},%{ endif }
+  %{ if index.corsOptions != null }"corsOptions": ${jsonencode(index.corsOptions)},%{ endif }
+  %{ if index.encryptionKey != null }"encryptionKey": ${jsonencode(index.encryptionKey)},%{ endif }
+  %{ if index.similarity != null }"similarity": ${jsonencode(index.similarity)},%{ endif }
+  %{ if index.semantic != null }"semantic": ${jsonencode(index.semantic)},%{ endif }
+  %{ if index.vectorSearch != null }"vectorSearch": ${jsonencode(index.vectorSearch)},%{ endif }
+  "fields": ${jsonencode(index.fields)}
+}

@@ -115,6 +115,86 @@ Type: `string`
 
 Default: `""`
 
+### <a name="input_indexers"></a> [indexers](#input\_indexers)
+
+Description: A list of indexer objects for Azure Cognitive Search indexers. Each object should conform to the API schema:
+- name (string, required): The name of the indexer.
+- dataSourceName (string, required): The name of the datasource from which this indexer reads data.
+- targetIndexName (string, required): The name of the index to which this indexer writes data.
+- description (string, optional): The description of the indexer.
+- disabled (bool, optional): Whether the indexer is disabled.
+- schedule (object, optional): The schedule for this indexer.
+- parameters (object, optional): Parameters for indexer execution.
+- encryptionKey (object, optional): Encryption key for the indexer.
+- fieldMappings (list(object), optional): Field mappings from data source to index.
+- outputFieldMappings (list(object), optional): Output field mappings after enrichment.
+- skillsetName (string, optional): The name of the skillset executing with this indexer.
+- etag (string, optional): ETag for concurrency control.
+
+Type:
+
+```hcl
+list(object({
+    name                = string
+    dataSourceName      = string
+    targetIndexName     = string
+    description         = optional(string)
+    disabled            = optional(bool)
+    schedule            = optional(any)
+    parameters          = optional(any)
+    encryptionKey       = optional(any)
+    fieldMappings       = optional(list(any))
+    outputFieldMappings = optional(list(any))
+    skillsetName        = optional(string)
+    etag                = optional(string)
+  }))
+```
+
+Default: `[]`
+
+### <a name="input_indexes"></a> [indexes](#input\_indexes)
+
+Description: A list of index objects for Azure Cognitive Search indexes. Each object should conform to the API schema:
+- name (string, required): The name of the index.
+- fields (list(object), required): List of field definitions (see API for structure).
+- scoringProfiles (list(object), optional): Scoring profiles for the index.
+- defaultScoringProfile (string, optional): Default scoring profile name.
+- suggesters (list(object), optional): Suggesters for the index.
+- analyzers (list(object), optional): Analyzers for the index.
+- tokenizers (list(object), optional): Tokenizers for the index.
+- tokenFilters (list(object), optional): Token filters for the index.
+- charFilters (list(object), optional): Character filters for the index.
+- corsOptions (object, optional): CORS options for the index.
+- encryptionKey (object, optional): Encryption key for the index.
+- similarity (object, optional): Similarity algorithm for the index.
+- semantic (object, optional): Semantic settings for the index.
+- vectorSearch (object, optional): Vector search configuration for the index.
+- etag (string, optional): ETag for concurrency control.
+
+Type:
+
+```hcl
+list(object({
+    name                  = string
+    fields                = list(any) # Use 'any' for flexibility, or define a detailed object if needed
+    scoringProfiles       = optional(list(any))
+    defaultScoringProfile = optional(string)
+    suggesters            = optional(list(any))
+    analyzers             = optional(list(any))
+    tokenizers            = optional(list(any))
+    tokenFilters          = optional(list(any))
+    charFilters           = optional(list(any))
+    corsOptions           = optional(any)
+    encryptionKey         = optional(any)
+    similarity            = optional(any)
+    semantic              = optional(any)
+    vectorSearch          = optional(any)
+    etag                  = optional(string)
+  }))
+```
+
+Default: `[]`
+
 ### <a name="input_local_authentication_enabled"></a> [local\_authentication\_enabled](#input\_local\_authentication\_enabled)
 
 Description: Enable local authentication for the Azure service plan.
@@ -262,6 +342,8 @@ The following resources are used by this module:
 
 - [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
 - [restapi_object.search_datasource](https://registry.terraform.io/providers/mastercard/restapi/latest/docs/resources/object) (resource)
+- [restapi_object.search_index](https://registry.terraform.io/providers/mastercard/restapi/latest/docs/resources/object) (resource)
+- [restapi_object.search_indexer](https://registry.terraform.io/providers/mastercard/restapi/latest/docs/resources/object) (resource)
 - [restapi_object.search_skillset](https://registry.terraform.io/providers/mastercard/restapi/latest/docs/resources/object) (resource)
 - [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) (data source)
 
@@ -283,31 +365,12 @@ module "example" {
 The minimal usage for the module is as follows:
 
 ```hcl
-data "azurerm_storage_account" "this" {
-  name                = "wntdsearchtest"
-  resource_group_name = "example-rg"
-}
-
 module "template" {
     source = "../.."
 
     name                = "ass-wntd"
     location             = "North Europe"
     resource_group_name = "example-rg"
-
-   /*data_sources = [
-    {
-      name        = "my-storage-account"
-      description = "My Storage Account data source."
-      type        = "azureblob"
-      credentials = {
-        connectionString = format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s", data.azurerm_storage_account.this.name, data.azurerm_storage_account.this.primary_access_key)
-      }
-      container = {
-        name  = "container"
-      }
-    }
-  ]*/
 }
 ```
 ## Contributing
