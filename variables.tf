@@ -50,7 +50,7 @@ variable "allowed_ips" {
 variable "local_authentication_enabled" {
   description = "Enable local authentication for the Azure service plan."
   type        = bool
-  default     = false
+  default     = true
 
 }
 
@@ -107,111 +107,22 @@ variable "user_assigned_identity_ids" {
   default     = []
 }
 
-variable "indexes" {
-  description = "List of search indexes to create. Each item should have a 'name', 'fields', and optional index properties. See Azure Search REST API docs for details."
-  type = list(object({
-    name = string
-    fields = list(object({
-      name            = string
-      type            = string
-      key             = optional(bool)
-      searchable      = optional(bool)
-      filterable      = optional(bool)
-      sortable        = optional(bool)
-      facetable       = optional(bool)
-      retrievable     = optional(bool)
-      analyzer        = optional(string)
-      search_analyzer = optional(string)
-      index_analyzer  = optional(string)
-      synonym_maps    = optional(list(string))
-      fields = optional(list(object({
-        name = string
-        type = string
-        // ...nested fields for complex types...
-      })))
-    }))
-    suggesters = optional(list(object({
-      name         = string
-      sourceFields = list(string)
-    })))
-    scoringProfiles = optional(list(any))
-    analyzers       = optional(list(any))
-    tokenizers      = optional(list(any))
-    tokenFilters    = optional(list(any))
-    charFilters     = optional(list(any))
-    encryptionKey   = optional(any)
-    corsOptions     = optional(any)
-    semantic        = optional(any)
-    // ...add more as needed from REST API schema...
-  }))
-  default = []
-}
-
 variable "data_sources" {
-  description = "List of data sources to create for Azure Search. See Azure Search REST API docs for details."
+  description = "List of data sources to create in the Azure Search Service."
   type = list(object({
-    name                        = string
-    type                        = string # e.g. 'azureblob', 'azuresql', 'cosmosdb', etc.
-    credentials                 = object({ connectionString = string })
-    container                   = object({ name = string, query = optional(string) })
-    description                 = optional(string)
+    name        = string
+    description = optional(string)
+    type        = string
+    credentials = object({
+      connectionString = string
+    })
+    container = object({
+      name  = string
+      query = optional(string)
+    })
     dataChangeDetectionPolicy   = optional(any)
     dataDeletionDetectionPolicy = optional(any)
     encryptionKey               = optional(any)
-    etag                        = optional(string)
-  }))
-  default = []
-}
-
-variable "skillsets" {
-  description = "List of skillsets to create for Azure Search. See Azure Search REST API docs for details."
-  type = list(object({
-    name              = string
-    skills            = list(any)
-    description       = optional(string)
-    cognitiveServices = optional(any)
-    encryptionKey     = optional(any)
-    knowledgeStore    = optional(any)
-    semanticSearch    = optional(any)
-    etag              = optional(string)
-  }))
-  default = []
-}
-
-variable "indexers" {
-  description = "List of indexers to create for Azure Search. See Azure Search REST API docs for details."
-  type = list(object({
-    name            = string
-    dataSourceName  = string
-    targetIndexName = string
-    schedule = optional(object({
-      interval  = string
-      startTime = optional(string)
-    }))
-    description         = optional(string)
-    parameters          = optional(any)
-    fieldMappings       = optional(list(any))
-    outputFieldMappings = optional(list(any))
-    skillsetName        = optional(string)
-    encryptionKey       = optional(any)
-    disabled            = optional(bool)
-    etag                = optional(string)
-  }))
-  default = []
-}
-
-variable "semantic_configs" {
-  description = "List of semantic configurations to create for Azure Search. See Azure Search REST API docs for details."
-  type = list(object({
-    name = string
-    prioritizedFields = object({
-      titleField                = object({ fieldName = string })
-      prioritizedContentFields  = list(object({ fieldName = string }))
-      prioritizedKeywordsFields = list(object({ fieldName = string }))
-    })
-    defaultAnswer             = optional(string)
-    defaultAnswerField        = optional(string)
-    defaultAnswerFieldMapping = optional(any)
   }))
   default = []
 }
