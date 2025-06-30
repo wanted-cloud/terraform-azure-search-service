@@ -1,6 +1,6 @@
 {
   "name": "${name}",
-  "description": "${description}",
+  %{ if description != null }"description": "${description}",%{ endif }
   "type": "${type}",
   "credentials": {
     "connectionString": "${credentials.connectionString}"
