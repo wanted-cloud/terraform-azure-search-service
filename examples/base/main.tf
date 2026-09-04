@@ -1,7 +1,7 @@
 module "template" {
-    source = "../.."
+  source = "../.."
 
-    name                = "example-aaiss"
-    location             = "North Europe"
-    resource_group_name = "example-rg"
+  name                = "example-aaiss"
+  location            = "North Europe"
+  resource_group_name = "example-rg"
 }
